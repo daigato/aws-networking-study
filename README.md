@@ -3,11 +3,18 @@
 AWSのネットワーク基礎（VPC/Subnet/IGW/RouteTable）を構築し、インフラの構造を理解するためのリポジトリ。
 
 ## 1. ネットワーク構成図
+
+```mermaid
 graph TD
-    subnet[Public Subnet] -- Route Table --> igw(Internet Gateway)
+    User -- SSH/Port22 --> SG[Security Group: my-web-sg]
+    SG -- Allow --> Instance[EC2 Instance]
+    Instance -- Network --> subnet[Public Subnet]
+    subnet -- Route Table --> igw(Internet Gateway)
     igw -- Internet --> User
 
+
 ## 2. 構築ログ
+
 ### ステップ1：VPCの作成
 - **CIDR:** 10.0.0.0/16
 - **名前:** my-first-vpc
