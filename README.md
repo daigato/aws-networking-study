@@ -3,7 +3,9 @@
 AWSのネットワーク基礎（VPC/Subnet/IGW/RouteTable）を構築し、インフラの構造を理解するためのリポジトリ。
 
 ## 1. ネットワーク構成図
-(ここにあとで図を載せる！)
+graph TD
+    subnet[Public Subnet] -- Route Table --> igw(Internet Gateway)
+    igw -- Internet --> User
 
 ## 2. 構築ログ
 ### ステップ1：VPCの作成
