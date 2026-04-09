@@ -13,6 +13,7 @@ graph TD
     igw -- Internet --> User
 
 
+
 ## 2. 構築ログ
 
 ### ステップ1：VPCの作成
