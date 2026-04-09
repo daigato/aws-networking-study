@@ -11,7 +11,7 @@ graph TD
     Instance -- Network --> subnet[Public Subnet]
     subnet -- Route Table --> igw(Internet Gateway)
     igw -- Internet --> User
-
+```
 
 
 ## 2. 構築ログ
