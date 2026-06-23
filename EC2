@@ -36,3 +36,17 @@ EC2
 ## SSHでログイン
   *ログインできない＞セキュリティグループを0.0.0.0/0の応急処置＞
   ターミナルで ssh -i "my-key-2026.pem" ec2-user@"パブリックIPv4アドレス"
+
+### Apache（WEBサーバー）を立ち上げる
+    1. 管理者権限（root）になる
+      sudo su -
+      ec2-user@ から root@
+    2. Apache（httpd）をインストール
+      dnf install -y httpd
+    3. Apacheを起動して、PC起動時に自動で動くようにする
+      systemctl start httpd
+      systemctl enable httpd
+    4. テスト用の画面（HTML）を作る
+      echo "<h1>EC2 Hello World</h1>" > /var/www/html/index.html
+    5. http://"パブリックIPv4アドレス"
+      *いまのままでは SSH しか許可がない＞セキュリティグループのインバウンドルールを編集＞タイプ: HTTP のルールを追加
