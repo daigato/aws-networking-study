@@ -35,7 +35,7 @@ EC2
 
 ## SSHでログイン
   *ログインできない＞セキュリティグループを0.0.0.0/0の応急処置＞
-  ターミナルで ssh -i "my-key-2026.pem" ec2-user@"パブリックIPv4アドレス"
+  ターミナルで ssh -i "C:\Users\****\Downloads\my-key-2026.pem" ec2-user@パブリックIPv4アドレス
 
 ### Apache（WEBサーバー）を立ち上げる
     1. 管理者権限（root）になる
@@ -50,6 +50,42 @@ EC2
       echo "<h1>EC2 Hello World</h1>" > /var/www/html/index.html
     5. http://"パブリックIPv4アドレス"
       *いまのままでは SSH しか許可がない＞セキュリティグループのインバウンドルールを編集＞タイプ: HTTP のルールを追加
+
+### EC2の中に MySQL（データベース）を入れて触ってみる
+    1. パッケージの更新＆インストール
+      sudo dnf update -y
+      sudo dnf install mariadb105-server -y
+    2. MySQL（MariaDB）の起動と自動起動設定
+      sudo systemctl start mariadb   # データベースのサービスを起動        
+      sudo systemctl enable mariadb  # サーバー再起動時にも自動で動くように設定
+      sudo systemctl status mariadb  # 状態確認（active (running) と出ればOK！）
+      *lines 1-23/23 (END)になるから、 q で脱出
+    3. データベースにログイン
+      sudo mysql
+      *EXIT;　で脱出
+    4. 使ってみよう
+      # 新しいデータベースを作る
+      CREATE DATABASE my_app;   # まずはデータの保管庫（箱）を作る
+      USE my_app;               # 作った箱の中に移動
+      # テーブル（表）を作る
+      CREATE TABLE users (                    # usersという表
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(50),
+        email VARCHAR(100)
+      );
+      # データをいれる
+      INSERT INTO users (name, email) 
+      VALUES ('dai', 'dai@example.com');
+      # 表示
+      SELECT * 
+      FROM users;
+      > +----+------+-----------------+
+        | id | name | email           |
+        +----+------+-----------------+
+        |  1 | dai  | dai@example.com |
+        +----+------+-----------------+
+        1 row in set (0.00 sec)
+
 
 # 片付け
   EC2インスタンスの「終了（削除）」
